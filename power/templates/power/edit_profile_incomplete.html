@@ -1,0 +1,136 @@
+{% extends 'power/base.html' %}
+
+{% block title %}dashboard{% endblock title %}
+
+{% block body %}
+<div class="content-wrapper">
+<div id="edit_profile" class="container">
+    <div class="row pt-4">
+        <div class="col-md-2">
+            <div class="row">
+                <img src="img/default_profile.png" class="img-fluid" />
+            </div>
+            <div class="row">
+                <button class="btn btn-success btn-sm">Upload</button>
+            </div>
+        </div>
+        <div class="col-md-10">
+            <div class="row">
+                <h2>Edit Your Profile</h2>
+                <div class="container">
+                    <form>
+                        <div class='form-group row'>
+                            <label for='firstname' class='col-md-2 col-form-label'>First Name</label>
+                            <div class='col-md-10'>
+                                <input type='text' class='form-control' id='firstname' name='firstname'
+                                    placeholder='First Name'>
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <label for='lastname' class='col-md-2 col-form-label'>Last Name</label>
+                            <div class='col-md-10'>
+                                <input type='text' class='form-control' id='lastname' name='lastname'
+                                    placeholder='Last Name'>
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <label for='mobileno' class='col-12 col-md-2 col-form-label'>Mobile Number</label>
+                            <div class='col-5 col-md-3'>
+                                <input type='tel' class='form-control' id='mobileno' name='mobileno'
+                                    placeholder='Mobile No'>
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <label for='address' class='col-md-2 col-form-label'>Address</label>
+                            <div class='col-md-10'>
+                                <input type='text' class='form-control' id='address' name='address'
+                                    placeholder='Address'>
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <label for='mobileno' class='col-12 col-md-2 col-form-label'>Mobile Number</label>
+                            <div class='col-5 col-md-3'>
+                                <input type='tel' class='form-control' id='mobileno' name='mobileno'
+                                    placeholder='Mobile No'>
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <label for='dob' class='col-12 col-md-2 col-form-label'>Date of Birth</label>
+                            <div class='col-5 col-md-3'>
+                                <input type='date' class='form-control' id='dob' name='dob'
+                                    placeholder='Dob'>
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <label for='emailid' class='col-md-2 col-form-label'>Email</label>
+                            <div class='col-md-10'>
+                                <p>Show email here </p>
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <label for='aadhar' class='col-md-2 col-form-label'>Aadhar No.</label>
+                            <div class='col-md-10'>
+                                <p>Show Aadhar no here</p>
+                            </div>
+                        </div>
+                        <div class='form-group'>
+                            <div id='changepass'>
+                                <div class='row'>
+                                    <label for='newpass' class='col-md-2 col-form-label'>New Password</label>
+                                    <div class='col-md-5'>
+                                        <input type='text' class='form-control' id='newpass' name='newpass'
+                                            placeholder='Enter New Password'>
+                                    </div>
+                                </div>
+                                <div class='row mt-2'>
+                                    <label for='reenterpass' class='col-md-2 col-form-label'>Re-enter New Password</label>
+                                    <div class='col-md-5'>
+                                        <input type='text' class='form-control' id='reenterpass' name='reenterpass'
+                                            placeholder='Re-Enter New Password'>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='row'>
+                                <div class='offset-md-2 col-md-10'>
+                                    <button type='button' class='btn btn-success' id='changepass' onclick="toggle('ch_pass');">Change Password</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <button type='submit' class='btn btn-primary mx-1' id='submit'>Save Changes</button>
+                            <button type='submit' class='btn btn-secondary' id='cancel'>Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+</div>
+</div>
+
+
+
+
+{% endblock body %}
+
+{% block custom_header %}
+    <li class="nav-item">
+        <a class="nav-link active" href="#">Edit Profile</a>
+    </li>
+{% endblock custom_header %}
+
+{% block custom_header_right %}
+<li class="nav-item dropdown user-icon">
+    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i></a>
+    <div class="dropdown-menu dropdown-menu-right">
+        <a href="{% url 'power:edit_profile' %}" class="dropdown-item">Edit Profile</a>
+        <a href="#" class="dropdown-item">Settings</a>
+        <div class="dropdown-divider"></div>
+        <a href="#"class="dropdown-item">Logout</a>
+    </div>
+</li>
+<li><i class="fas fa-caret-down pt-3 pl-2"></i></li>
+
+{% endblock custom_header_right %}
