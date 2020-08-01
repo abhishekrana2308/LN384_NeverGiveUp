@@ -1,11 +1,11 @@
 # LN384_NeverGiveUp
 ## command line instructions for linux(ubuntu/mint) only, window users follow the steps and find the commands on your own.
 
-#### install python3
+#### Install python3
 
-#### install pip
+#### Install pip
 
-#### install django-admin
+#### Install django-admin
 - pip install django-admin==1.9
 
 #### running django server
