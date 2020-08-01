@@ -1,1 +1,27 @@
 # LN384_NeverGiveUp
+## command line instructions for linux(ubuntu/mint) only, window users follow the steps and find the commands on your own.
+
+#### install python3
+
+#### install pip
+
+#### install django-admin
+- pip install django-admin==1.9
+
+#### running django server
+- move to folder containing manage.py file
+- python manage.py makemigrations
+- python manage.py migrate
+- python manage.py runserver
+
+#### Creating Super User
+- move to folder containing manage.py file
+- python manage.py createsuperuser
+- Enter username and password
+
+#### Django Admin
+- First create a super user
+- move to folder containing manage.py file
+- python manage.py runserver
+- Go to localhost:8000/admin
+
