@@ -1,0 +1,534 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    
+    
+
+    <title>{% block title %}power{% endblock title %}</title>
+    <style>
+      body{
+        background-color: rgb(50,50,50);
+      }
+      nav{
+        border-radius: 0 0 15px 15px;
+      }
+      .content-wrapper{
+        background-color: white;
+        min-height: 550px;
+        height: 100%;
+        margin: 12px 12px 0 12px;
+        border-radius: 15px 15px 0 0;
+      }
+      .user-icon {
+        border :  1px solid rgb(50,50,50);
+        padding: 2px 8px;
+        border-radius: 50%;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .dropdown-toggle::after{
+        display: none;
+      }
+      .my-menu{
+        position: absolute;
+        left: -50px;
+        min-width: 8rem;
+      }
+      .my-btn{
+        background-color: #00408B;
+        border-radius: 50%;
+        padding: 8px 16px;
+      }
+      a:hover{text-decoration: none;}
+      li.active a{
+        color: #00408B !important;
+      }
+      li a{
+        color: black !important;
+      }
+      .about-us-btn{
+        color: #00408B;
+        border:1px solid #00408B;
+        border-radius: 30px;
+        padding: 8px 30px;
+        font-size: 15px;
+      }
+      .about-us-btn:hover{
+        background-color: #00408B;
+        color: #fff;
+      }
+      .my-btn2{
+        font-size: 13px;
+        padding: 3px 10px;
+        border: 1px solid rgb(50,50,50);
+        border-radius: 30px;
+        background:transparent;
+        color: black;
+      }
+      .my-btn2:hover{
+        color: #fff;
+        background-color: rgb(50,50,50);
+      }
+      .my-btn3{
+        font-size: 13px;
+        padding: 9px 22px;
+        border: 1px solid rgb(50,50,50);
+        border-radius: 30px;
+        background:transparent;
+        color: black;
+      }
+      .my-btn3:hover{
+        color: #fff;
+        background-color: rgb(50,50,50);
+      }
+      #scrap_data{
+        border: 1px solid rgb(50,50,50);
+      }
+      .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid rgb(50,50,50);
+        border-bottom: 16px solid rgb(50,50,50);
+        width: 10px;
+        height: 10px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+      }
+
+      @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+      }
+
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+</head>
+<body>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"> </script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'power:index' %}">Potential</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+            
+            <li class="nav-item {% if homelink %} active {% endif %}">
+                <a class="nav-link" href="
+                #">Home <span class="sr-only">(current)</span></a>
+                {% comment %} haha_hello {% endcomment %}
+                {% comment %} {% if request.session.uid %}
+                    {% if request.session.is_user %} {% url 'power:user_dash' %}
+                    {% else %} {% url 'power:govt_dash' %}
+                    {% endif %}
+                {% else %} {% url 'power:index' %}
+                {% endif %} {% endcomment %}
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'power:index' %}">Services <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="modal" data-target="#contactmodal" href="#" >Contact<span class="sr-only">(current)</span></a>
+            </li>
+            {% comment %} <li class="nav-item">
+                <a class="nav-link" href="{% url 'power:user_dash' %}">User Dash<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'power:govt_dash' %}">Govt Dash<span class="sr-only">(current)</span></a>
+            </li> {% endcomment %}
+            
+            
+            
+            </ul>
+            <!--<form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form> -->
+            <ul class="nav navbar-nav ml-auto">
+            {% block custom_header_right %}
+                {% comment %} {% if request.session.uid %}
+                  {% if request.session.is_user %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'power:user_dash' %}">{{request.session.name}} <span class="sr-only">(current)</span></a>
+                  </li>
+                  {% else %}
+                  <li class="nav-item">
+                      <a class="nav-link" href="{% url 'power:govt_dash' %}">{{request.session.name}} <span class="sr-only">(current)</span></a>
+                  </li>
+                  {% endif %}
+                {% endif %} {% endcomment %}
+                <li class="nav-item">
+                      <a class="nav-link" href="{% url 'power:user_dash' %}">{{request.session.name}} <span class="sr-only">(current)</span></a>
+                  </li>
+                <li class="nav-item user-icon dropdown">
+                    <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
+                    <div class="dropdown-menu my-menu" aria-labelledby="dropdownMenuButton">
+                    
+                    {% comment %} {% if request.session.uid %}
+                    <a href="{% url 'power:edit_profile' %}" class="dropdown-item">Edit Profile</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'power:logout' %}"class="dropdown-item">Logout</a>
+                    {% else %}
+                    <a class="dropdown-item" data-toggle="modal" data-target="#loginmodal" href="#">User</a>
+                    <a class="dropdown-item" data-toggle="modal" data-target="#adminloginmodal" href="#">Admin</a>
+                    {% endif %} {% endcomment %}
+
+                  </div>
+                </li>
+                <li><i class="fas fa-caret-down pt-3 pl-2"></i></li>
+        
+
+                   
+            {% endblock custom_header_right %}
+            </ul> 
+        </div>
+    </nav>
+    
+    {% block body %}
+    {% endblock body %}
+</body>
+</html>
+<!-- Contact us Modal -->
+<div class="modal fade" id="contactmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Contact Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="text" disabled="true" class="form-control" name="email" id="email" value="never_give_up@gmail.com">
+          </div>
+          <div class="form-group">
+              <label for="mobileno">Mobile</label>
+              <input type="text" class="form-control" name="mobileno" id="mobileno" value="+91-8789232315" disabled="true">
+          </div>
+        </form>    
+      
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- User Signin Modal -->
+<div class="modal fade" id="loginmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">LOGIN AS USER</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="#" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" name="email" id="email" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary my-btn"><i class="fas fa-chevron-right"></i></button>
+      </form>    
+      <p class="mt-2">
+          Don't Have an Account?
+          <a href="#" data-toggle="modal" data-target="#signupmodal" data-dismiss="modal">Sign up</a>
+      </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- User Signup Modal -->
+<div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CREATE AN ACCOUNT</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="#" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" class="form-control" name="name" id="name" placeholder="Enter Full Name">
+          </div>
+          <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" name="email" id="email" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary my-btn"><i class="fas fa-chevron-right"></i></button>
+      </form>    
+      <p class="mt-2">
+          Already Have an Account?
+          <a href="#" data-toggle="modal" data-target="#loginmodal" data-dismiss="modal">Login</a>
+      </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- Admin Signin Modal -->
+<div class="modal fade" id="adminloginmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">LOGIN AS ADMIN</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="#" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" name="email" id="email" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary my-btn"><i class="fas fa-chevron-right"></i></button>
+      </form>    
+      <p class="mt-2">
+          Don't Have an Account?
+          <a href="#" data-toggle="modal" data-target="#adminsignupmodal" data-dismiss="modal">Sign up</a>
+      </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Admin Signup Modal -->
+<div class="modal fade" id="adminsignupmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CREATE AN ACCOUNT</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="#" method="post">
+          {% csrf_token %}
+          <div class="form-group">
+              <label for="name">Full Name</label>
+              <input type="text" class="form-control" name="name" id="name" placeholder="Enter Full Name">
+          </div>
+          <div class="form-group">
+              <label for="email">Email address</label>
+              <input type="email" class="form-control" name="email" id="email" placeholder="Enter email">
+          </div>
+          <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+          </div>
+          <button type="submit" class="btn btn-primary my-btn"><i class="fas fa-chevron-right"></i></button>
+      </form>    
+      <p class="mt-2">
+          Already Have an Account?
+          <a href="#" data-toggle="modal" data-target="#adminloginmodal" data-dismiss="modal">Login</a>
+      </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Apply Filter Modal -->
+{% block apply_filter %}
+{% endblock apply_filter %}
+
+
+
+<!-- Edit Profile  change password Modal -->
+<div class="modal fade" id="changepasswordmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">CHANGE PASSWORD</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="#" method="post">
+          {% csrf_token %}
+          <div class='form-group'>
+            <div id='changepass'>
+                <div class='row'>
+                    <label for='newpass' class='col-md-5 col-form-label'>New Password</label>
+                    <div class='col-md-7'>
+                        <input type='password' class='form-control' id='newpass' name='newpass'
+                            placeholder='Enter New Password'>
+                    </div>
+                </div>
+                <div class='row mt-2'>
+                    <label for='reenterpass' class='col-md-5 col-form-label'>Re-enter New Password</label>
+                    <div class='col-md-7'>
+                        <input type='password' class='form-control' id='reenterpass' name='reenterpass'
+                            placeholder='Re-Enter New Password'>
+                    </div>
+                </div>
+            </div>
+        </div>
+          <button type="submit" class="btn btn-primary my-btn ml-1"><i class="fas fa-chevron-right"></i></button>
+      </form>    
+      <!-- <p class="mt-2">
+          Already Have an Account?
+          <a href="#" data-toggle="modal" data-target="#adminloginmodal" data-dismiss="modal">Login</a>
+      </p> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Admin Add Data Modal -->
+<div class="modal fade" id="adddatamodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">ADD DATA</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form class="p-2"  action="#" method="post">
+              {% csrf_token %}
+              <div class="form-group">
+                <div class="row">
+                  <label for="add_sector" class="col-md-3">Sector</label>
+                  
+                  <select name="sector" class="form-control col-md-9" id="add_sector">
+                    {% for sector in all_sectors %}
+                        <option value="{{sector.id}}">{{sector}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                  
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <label for="state" class="col-md-3">State</label>
+                  <select name="state" class="form-control col-md-9" id="state">
+                    {% for state in all_states %}
+                        <option value="{{state}}">{{state}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                  
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <label for="board" class="col-md-3">Board</label>
+                  <input type="text" class="form-control col-md-9" id="board" name="name" placeholder="Name of Board">
+                  
+                  {% comment %} <select class="form-control col-md-9" id="board">
+                      <option>MP Board Electricity</option>
+                      <option>CESC</option>
+                  </select> {% endcomment %}
+                </div>
+                  
+              </div>
+              
+              
+              <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3" for="scrap_url">Page URL</label>
+                  <input type="url" name="url" class="form-control col-md-9" id="scrap_url" placeholder="www.indanegas.com/regulatory_info">
+                  <!-- <span id="newurl">&nbsp;</span>
+                  <input type="button" value="+" class="btn btn-sm btn-outline-secondary mt-1 ml-auto" onclick="add()"/> -->
+                </div>
+                  
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <label class="col-md-3" for="xpath">Xpath</label>
+                  <input type="text" name="xpath" class="form-control col-md-9" id="xpath" placeholder="Enter Xpath">
+                  <!-- <span id="newurl">&nbsp;</span>
+                  <input type="button" value="+" class="btn btn-sm btn-outline-secondary mt-1 ml-auto" onclick="add()"/> -->
+                </div>
+                  
+              </div>
+              <button type="submit" class="btn btn-primary my-btn ml-1"><i class="fas fa-chevron-right"></i></button>
+          </form>
+        <p class="mt-3">
+          Need Help?
+          <a href="#" data-dismiss="modal">Click Here</a>
+      </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% comment %} 
+
+<SCRIPT language="javascript">
+function add() {
+
+    //Create an input type dynamically.
+    var element = document.createElement("input");
+
+    //Assign different attributes to the element.
+    element.setAttribute("type", "url");
+    element.setAttribute("placeholder","Enter the url");
+    element.setAttribute("class", "form-control mt-1 mr-1");
+    // element.setAttribute("name", );
+
+
+    var foo = document.getElementById("newurl");
+
+    //Append the element in page (in span).
+    foo.appendChild(element);
+
+}
+</SCRIPT> {% endcomment %}

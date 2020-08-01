@@ -1,0 +1,33 @@
+{% extends 'power/base.html' %}
+
+{% block title %}home page{% endblock title %}
+
+{% block body %}
+{% if message %}
+{% if type %}
+<div id="alert" style="position: fixed;right: 20px;top: 40px;" class="alert alert-success" role="alert">
+  {{message}}
+</div>
+{% else %}
+<div id="alert" style="position: fixed;right: 20px;top: 40px;" class="alert alert-danger" role="alert">
+  {{message}}
+</div>
+{% endif %}
+
+{% endif %}
+<div class="content-wrapper">
+	<div class="jumbotron" style="background:transparent;">
+	  <h1 class="display-4">We've Potential!</h1>
+	  <p class="lead">This is a Virtual World of Power Sector Regulatory Complaince Data. Join With US to get Notified.</p>
+	  <hr class="my-4">
+	  <p>Get Notifications of All Power Sector Regulatory Complaince Data in your Mobile.</p>
+	  <p class="lead">
+	    <a class="btn btn-lg about-us-btn" href="#" role="button">ABOUT US</a>
+	  </p>
+	</div>
+</div>
+<script type="text/javascript">
+	$("#alert").fadeOut(3000);
+</script>
+
+{% endblock body %}
