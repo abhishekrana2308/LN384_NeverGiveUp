@@ -85,7 +85,7 @@ def scraping(request,id):
 	print(xpath)
 	options = Options()
 	options.headless = True
-	driver = webdriver.Chrome('./other/chromedriver', options=options)
+	driver = webdriver.Chrome('./chromedriver', options=options)
 
 
 	driver.get(url)
@@ -108,7 +108,7 @@ def scrap_data(request):
     print(xpath)
     options = Options()
     options.headless = True
-    driver = webdriver.Chrome('./other/chromedriver', options=options)
+    driver = webdriver.Chrome('./chromedriver', options=options)
 
 
     driver.get(url)
