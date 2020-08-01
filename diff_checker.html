@@ -88,17 +88,17 @@ function launch() {
   var prev = '', curr = '', add = 0, del = 0;
   d.forEach(row => {
     if(row[0] == 0) {
-      prev += `<span>`+row[1]+`</span>`;
-      curr += `<span>`+row[1]+`</span>`;
+      prev += `<span>`+row[1]+`</span><br>`;
+      curr += `<span>`+row[1]+`</span><br>`;
     } else if(row[0] == -1) {
-      prev += `<del style="background: #ffe6e6">`+row[1]+`</del>`;
+      prev += `<del style="background: #ffe6e6">`+row[1]+`</del><br>`;
       var str = row[1]
       str = str.replace(/(^\s*)|(\s*$)/gi,"");
       str = str.replace(/[ ]{2,}/gi," ");
       str = str.replace(/\n /,"\n");
       del += str.split(' ').length;
     } else if(row[0] == 1) {
-      curr += `<ins style="background: #e6ffe6">`+row[1]+`</ins>`;
+      curr += `<ins style="background: #e6ffe6">`+row[1]+`</ins><br>`;
       var str = row[1]
       str = str.replace(/(^\s*)|(\s*$)/gi,"");
       str = str.replace(/[ ]{2,}/gi," ");
