@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://kit.fontawesome.com/c49235a437.js" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
+	<title>Fill Threshold</title>
+	<style>
+		.display-5 {
+			font-size: 1.5rem;
+			font-weight: 100;
+		}
+
+		.card {
+			border: 1px solid #F58883;
+			box-shadow: 4px 4px rgba(245,136,131,0.12), 4px 4px rgba(245,136,131,0.12);
+			margin: 50px 0;
+		}
+
+		.card-header {
+			background-color: rgba(245,136,131,0.2);
+    		border-bottom: 1px solid #F58883;
+		}
+
+		.card-footer {
+			background-color: rgba(245,136,131,0.2);
+    		border-top: 1px solid #F58883;
+		}
+
+		.card-text {
+			margin-bottom: 5px;
+		}
+
+		.card-details {
+			display: grid;
+			grid-template-columns: 	repeat(2, 1fr);
+		}
+
+		.buttons {
+			display: grid;
+		    grid-template-columns: 1fr 1fr;
+		    height: 20%;
+		    grid-column-gap: 10px;
+		    margin-top: 10%;
+		}
+	</style>
+</head>
+<body>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">Company or Stakeholder's Name</h3>
+        <button type="button" style="outline: none" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div id="company-details">
+        	<div class="mb-3">
+        		<h3 class="text-success">-------------- Analysis Report -------------</h3>
+				<p class="text-muted mb-0">Sector Type --> ...</p>
+				<p class="text-muted">Operating Region --> ...</p>
+				<p class="text-muted mb-0">Concered Authority --> ...</p>
+				<p class="text-muted">Type of Sector --> (Production, Transmission, Distribution) </p>
+
+				<p class="text-muted mb-0">Date of Report --> ...</p>
+				<p class="text-muted mb-0">Column1 Name --> ...</p>
+				<p class="text-muted mb-0">Actual Production (in MWH) --> ...</p>
+				<p class="card-text">Column1 Given Min Limit --> ...</p>
+				<p class="card-text mb-4">Column1 Given Max Limit --> ...</p>
+
+				<p class="text-muted mb-0">Absolute Deviation --> mod(average of given range - Actual Production)</p>
+				<p class="text-muted mb-0">Percentage Deviation --> (Absolute Deviation/ (average of given range))*100</p>
+				<p class="text-muted mb-0">Actions Required --> Determine Whether Production Should go up or Down</p>
+
+			</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+	<div class="container mt-5">
+		<div class="mb-3">
+			<p class="h3">Company or Stakeholder's Name</p>
+			<p class="text-muted mb-0">Sector - ...</p>
+			<p class="text-muted">Region - ...</p>
+		</div>
+
+		<div id="chartContainer" style="height: 370px; width: 100%;"></div>
+		
+		<br><br>
+
+		<div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+
+		<br><br>
+		<div class="card">
+		  <div class="card-header">
+		    Company or Stakeholder's name
+		  </div>
+		  <div class="card-body">
+		    <h5 class="card-title">Given the Regulatory Compliance limit the above Stakeholder was non-compliant on :-</h5>
+		    <div class="card-details">
+		    	<div>
+				    <p class="card-text">Column1 Produced Output</p>
+				    <p class="card-text">Column1 Given Min Limit</p>
+				    <p class="card-text">Column1 Given Max Limit</p>
+				</div>
+				<div class="buttons">
+					<button data-toggle="modal" data-target="#exampleModalCenter1" class="btn btn-success">View Details</button>
+					<button data-toggle="modal" data-target="#exampleModalCenter1" class="btn btn-danger">Generate PDF</button>
+				</div>
+			</div>
+		  </div>
+		  <div class="card-footer">
+		    Date of Report: 30/07/2020
+		  </div>
+		</div>
+
+		<div class="card">
+		  <div class="card-header">
+		    Company or Stakeholder's name
+		  </div>
+		  <div class="card-body">
+		    <h5 class="card-title">Given the Regulatory Compliance limit the above Stakeholder was non-compliant on :-</h5>
+		    <div class="card-details">
+		    	<div>
+				    <p class="card-text">Column1 Produced Output</p>
+				    <p class="card-text">Column1 Given Min Limit</p>
+				    <p class="card-text">Column1 Given Max Limit</p>
+				</div>
+				<div class="buttons">
+					<button data-toggle="modal" data-target="#exampleModalCenter1" class="btn btn-success">View Details</button>
+					<button data-toggle="modal" data-target="#exampleModalCenter1" class="btn btn-danger">Generate PDF</button>
+				</div>
+			</div>
+		  </div>
+		  <div class="card-footer">
+		    Date of Report: 30/07/2020
+		  </div>
+		</div>
+
+
+		<div class="card">
+		  <div class="card-header">
+		    Company or Stakeholder's name
+		  </div>
+		  <div class="card-body">
+		    <h5 class="card-title">Given the Regulatory Compliance limit the above Stakeholder was non-compliant on :-</h5>
+		    <div class="card-details">
+		    	<div>
+				    <p class="card-text">Column1 Produced Output</p>
+				    <p class="card-text">Column1 Given Min Limit</p>
+				    <p class="card-text">Column1 Given Max Limit</p>
+				</div>
+				<div class="buttons">
+					<button data-toggle="modal" data-target="#exampleModalCenter1" class="btn btn-success">View Details</button>
+					<button data-toggle="modal" data-target="#exampleModalCenter1" class="btn btn-danger">Generate PDF</button>
+				</div>
+			</div>
+		  </div>
+		  <div class="card-footer">
+		    Date of Report: 30/07/2020
+		  </div>
+		</div>
+
+
+		<div class="card">
+		  <div class="card-header">
+		    Company or Stakeholder's name
+		  </div>
+		  <div class="card-body">
+		    <h5 class="card-title">Given the Regulatory Compliance limit the above Stakeholder was non-compliant on :-</h5>
+		    <div class="card-details">
+		    	<div>
+				    <p class="card-text">Column1 Produced Output</p>
+				    <p class="card-text">Column1 Given Min Limit</p>
+				    <p class="card-text">Column1 Given Max Limit</p>
+				</div>
+				<div class="buttons">
+					<button data-toggle="modal" data-target="#exampleModalCenter1" class="btn btn-success">View Details</button>
+					<button data-toggle="modal" data-target="#exampleModalCenter1" class="btn btn-danger">Generate PDF</button>
+				</div>
+			</div>
+		  </div>
+		  <div class="card-footer">
+		    Date of Report: 30/07/2020
+		  </div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		window.onload = function () {
+
+		var chart = new CanvasJS.Chart("chartContainer", {
+			animationEnabled: true,
+			theme: "light2",
+			title:{
+				text: "Production Outputs"
+			},
+			data: [{        
+				type: "line",
+		      	indexLabelFontSize: 16,
+				dataPoints: [
+					{ y: 450 },
+					{ y: 414},
+					{ y: 520, indexLabel: "\u2191 highest",markerColor: "red", markerType: "triangle" },
+					{ y: 460 },
+					{ y: 450 },
+					{ y: 500 },
+					{ y: 480 },
+					{ y: 480 },
+					{ y: 410 , indexLabel: "\u2193 lowest",markerColor: "DarkSlateGrey", markerType: "cross" },
+					{ y: 500 },
+					{ y: 480 },
+					{ y: 510 }
+				]
+			}]
+		});
+		chart.render();
+
+		var chart = new CanvasJS.Chart("chartContainer2", {
+				theme: "light1", // "light2", "dark1", "dark2"
+				animationEnabled: true, // change to true		
+				title:{
+					text: "Basic Column Chart"
+				},
+				data: [
+				{
+					// Change type to "bar", "area", "spline", "pie",etc.
+					type: "column",
+					dataPoints: [
+						{ label: "apple",  y: 10  },
+						{ label: "orange", y: 15  },
+						{ label: "banana", y: 25  },
+						{ label: "mango",  y: 30  },
+						{ label: "grape",  y: 28  }
+					]
+				}
+				]
+			});
+			chart.render();
+
+		}
+
+
+
+
+	</script>
+</body>
+</html>
+
+
+
