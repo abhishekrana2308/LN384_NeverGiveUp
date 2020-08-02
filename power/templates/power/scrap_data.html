@@ -1,0 +1,132 @@
+{% extends 'power/base.html' %}
+
+{% block title %}dashboard{% endblock title %}
+
+{% block body %}
+<div class="content-wrapper">
+<div id="edit_profile" class="container-fluid">
+    <div class="row pt-4">
+        
+        <div class="col-md-5">
+            <div class="row">
+                <h3 class="ml-3 mb-3">{{board.name}}</h3>
+                <div class="container">
+                    <form>
+                        {% csrf_token %}
+                        <div class='form-group row'>
+                            <label for='firstname' class='col-md-3 col-form-label'>Sector</label>
+                            <div class='col-md-9'>
+                                <input disabled="true" type='text' class='form-control' id='firstname' name='sector'
+                                    value="{{board.sector}}">
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <label for='firstname' class='col-md-3 col-form-label'>State</label>
+                            <div class='col-md-9'>
+                                <input disabled="true" type='text' class='form-control' id='firstname' name='sector'
+                                    value="{{board.state}}">
+                            </div>
+                        </div>
+                        <div class='form-group row'>
+                            <label for='lastname' class='col-md-3 col-form-label'>Page URL</label>
+                            <div class='col-md-9'>
+                                <input disabled="" type='text' class='form-control' id='url' name='url'
+                                    value="{{board.url}}">
+                            </div>
+                        </div>
+                        <input disabled="" type='hidden' class='form-control' id='xpath' name='xpath' value="{{board.xpath}}">
+                        <div class='form-group row'>
+                            <label for='mobileno' class='col-12 col-md-3 col-form-label'>Last Modified</label>
+                            <div class='col-5 col-md-9'>
+                                <input disabled="" type='tel' class='form-control' id='mobileno' name='modified'
+                                    value="{{ message }}">
+                            </div>
+                        </div>
+                        <!-- <div class='form-group row'>
+                            <label for='aadhar' class='col-md-2 col-form-label'>Aadhar No.</label>
+                            <div class='col-md-10'>
+                                <p>Show Aadhar no here</p>
+                            </div>
+                        </div> -->
+                        
+                        <div class='form-group row'>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Go Back" type="submit" class="btn btn-primary my-btn ml-3"><i class="fas fa-chevron-left"></i></a>
+                            <a href="#" class='btn my-btn3 ml-3' id='notifications'>Enable Notifications</a>
+                            <div id="loader" class="loader ml-4 mt-1"></div>
+                        </div>
+                    </form>
+                    
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div id="scrap_data" class="jumbotron p-3" style="background: transparent;overflow-x: scroll;"></div>
+        </div>
+    </div>
+    
+
+</div>
+</div>
+
+
+<script type="text/javascript">
+    var csrftoken = $("[name=csrfmiddlewaretoken]").val();
+    document.getElementById('scrap_data').style.display = "none";
+
+    function loadData() {
+        url = document.getElementById('url').value;
+        xpath = document.getElementById('xpath').value;
+        document.getElementById('scrap_data').style.display = "none";
+        document.getElementById('loader').style.display = "block";
+        $.ajax({
+            url: "/power/scrap_data/",
+            method : "POST",
+            headers:{
+                "X-CSRFToken": csrftoken
+            },
+            data:{"url": url, "xpath":xpath},
+            cache:true,
+            success: function(result){
+                document.getElementById('loader').style.display = "none";
+                document.getElementById('scrap_data').style.display = "block";
+                document.getElementById('scrap_data').innerHTML = result;
+
+                arr = url.split('/');
+                baseurl = arr[0] + '//' + arr[2] + '/';
+                $("#scrap_data a").each(function(){
+                    $(this).attr("href", baseurl + $(this).attr("href"));
+                });
+            }
+        });
+    }
+    loadData();
+
+    window.setInterval(function(){loadData();}, 30000);
+</script>
+
+
+
+{% endblock body %}
+
+{% block custom_header %}
+    <li class="nav-item">
+        <a class="nav-link active" href="#">Edit Profile</a>
+    </li>
+{% endblock custom_header %}
+
+{% block custom_header_right %}
+
+
+
+<li class="nav-item dropdown user-icon">
+    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i></a>
+    <div class="dropdown-menu dropdown-menu-right">
+        <a href="#" class="dropdown-item">Edit Profile</a>
+        <div class="dropdown-divider"></div>
+        <a href="#"class="dropdown-item">Logout</a>
+    </div>
+</li>
+<li><i class="fas fa-caret-down pt-3 pl-2"></i></li>
+
+{% endblock custom_header_right %}

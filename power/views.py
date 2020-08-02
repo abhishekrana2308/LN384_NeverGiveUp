@@ -1,6 +1,9 @@
 from django.shortcuts import render,redirect, get_object_or_404
 
 from django.http import HttpResponse,JsonResponse
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
 
 from .models import Sector,Board
 
@@ -69,3 +72,58 @@ def user_dash(request):
 	}
 
 	return render(request, "power/user_dash.html", context)
+
+
+
+# # Scraping
+
+def scraping(request,id):
+	board = Board.objects.get(pk=id)
+	url = board.url
+	xpath = board.xpath
+	print(url)
+	print(xpath)
+	options = Options()
+	options.headless = True
+	driver = webdriver.Chrome('./chromedriver', options=options)
+
+
+	driver.get(url)
+	driver.execute_script("console.error(document.lastModified)")
+	log = driver.get_log('browser')
+	for val in log:
+	    if val['source'] == "console-api":
+	        message = val['message']
+	        message = message.split('"')
+	        message = message[1]
+	        
+	b = get_object_or_404(Board, pk=id)
+	enable=1
+	return render(request, 'power/scrap_data.html', context = {"message" : message, "board" : b,"enable":enable})
+
+def scrap_data(request):
+    url = request.POST.get('url')
+    xpath = request.POST.get('xpath')
+    print(url)
+    print(xpath)
+    options = Options()
+    options.headless = True
+    driver = webdriver.Chrome('./chromedriver', options=options)
+
+
+    driver.get(url)
+
+    data = driver.find_elements_by_xpath(xpath)
+
+    html=""
+    for val in data:
+        html += val.get_attribute("outerHTML")
+    driver.close()
+
+    #My HTML
+    my_html = ""
+
+    return HttpResponse(html+my_html)
+
+
+
