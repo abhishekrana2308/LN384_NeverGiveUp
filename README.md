@@ -5,8 +5,8 @@
 
 #### Install pip
 
-#### Install django-admin
-- pip install django-admin==1.9
+#### Install django
+- pip install django==1.9
 
 #### running django server
 - move to folder containing manage.py file
