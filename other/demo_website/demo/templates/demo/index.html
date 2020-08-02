@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<script src="https://kit.fontawesome.com/c49235a437.js" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"> </script> 
+	<title>Fill Threshold</title>
+</head>
+<body>
+
+	<div class="container mt-5">
+		<form action="{% url 'demo:index' %}" method="post">
+			{% csrf_token %}
+		  <div class="form-group">
+		    <label for="exampleFormControlSelect1">Choose Sector</label>
+		    <select name="sector" class="form-control" id="exampleFormControlSelect1"  name="name">
+		      <option value="Electricity">Electricity</option>
+		      <option value="Coal">Coal</option>
+		      <option value="Gas">Gas</option>
+		      <option value="Hydro">Hydro</option>
+		      <option value="Nuclear">Nuclear</option>
+		      <option value="Wind">Wind</option>
+		      <option value="Solar">Solar</option>
+		    </select>
+		  </div>
+			<div class="form-group">
+		    <label for="Actual_flow_min">Actual Flow</label>
+		    <input name="Actual_flow_min" type="text" class="form-control" id="Actual_flow_min" aria-describedby="emailHelp" placeholder="Enter Min. Threshold">
+		    <small class="form-text text-muted">Set the Min Threshold value for above field</small>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="Actual_flow_max">Actual Flow</label>
+		    <input name="Actual_flow_max" type="text" class="form-control" id="Actual_flow_max" aria-describedby="emailHelp" placeholder="Enter Max. Threshold">
+		    <small class="form-text text-muted">Set the Min Threshold value for above field</small>
+		  </div>
+
+			<div class="form-group">
+		    <label for="Frequency_min">Frequency</label>
+		    <input name="Frequency_min" type="text" class="form-control" id="Frequency_min" aria-describedby="emailHelp" placeholder="Enter Min. Threshold">
+		    <small class="form-text text-muted">Set the Min Threshold value for above field</small>
+		  </div>
+
+		  <div class="form-group">
+		    <label for="Frequency_max">Actual Flow</label>
+		    <input name="Frequency_max" type="text" class="form-control" id="Frequency_max" aria-describedby="emailHelp" placeholder="Enter Max. Threshold">
+		    <small class="form-text text-muted">Set the Min Threshold value for above field</small>
+		  </div>
+
+		  <button type="submit" class="btn btn-primary">Submit</button>
+		</form>
+		<p>
+		{% if message %}{{message}}{% endif %}
+		</p>
+
+	</div>
+</body>
+</html>
