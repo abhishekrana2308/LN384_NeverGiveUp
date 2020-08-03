@@ -1,5 +1,5 @@
 # LN384_NeverGiveUp
-## command line instructions for linux(ubuntu/mint) only, window users follow the steps and find the commands on your own.
+## command line instructions for linux(ubuntu/mint) only, window users follow the steps and find the commands on your own
 
 #### Install python3
 
