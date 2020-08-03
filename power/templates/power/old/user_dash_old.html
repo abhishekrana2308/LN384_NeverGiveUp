@@ -1,0 +1,159 @@
+{% extends 'power/base.html' %}
+
+{% block title %}dashboard{% endblock title %}
+
+
+
+{% block body %}
+<script>
+function search(val){
+    
+    $.ajax({
+        method : "POST",
+        url:"{% url 'power:search' %}",
+        data : {
+            "search":val,
+            "csrfmiddlewaretoken": '{{ csrf_token }}',
+        },
+        success : function(result){
+            console.log(result);
+            
+            var x = document.getElementById("tbody1");
+            var i=0;
+            text="";
+            for(; i<result.length; i++){
+                
+                row =   "<tr>\n"+
+                        "    <th>"+(i+1)+"</th>\n"+
+                        "    <td>"+result[i]['name']+"</td>\n"+
+                        "    <td>"+result[i].sector_id+"</td>\n"+
+                        "    <td>"+result[i]['state']+"</td>\n"+
+                        "</tr>\n";
+                text +=row;
+            }
+                
+            x.innerHTML = text;
+            {% comment %} console.log(result); {% endcomment %}
+        }
+    });
+}
+</script>
+
+
+<div class="content-wrapper">
+<div class="container">
+    <div class="row pt-5">
+        <div class="col-md-9">
+            <div class="container">
+                <div class="row pl-3">
+                    <form>
+                        
+                        <div class="form-group row">
+                            <div class="col-md-8">
+                                <input type="text" name="keyword" id="search_keyword" placeholder="Search keyword" onkeyup="search(this.value)">
+                            </div>
+                            <div class='col-md-1 ml-0'>
+                                <button type="submit" class="btn btn-secondary btn-sm">Search</i></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row row-content" id="searchresult">
+                    <div class='col-12 col-sm-9'>
+                             <h2>Search Results</h2>
+                             <div class='table-responsive'>
+                                 <table class='table table-striped'>
+                                     <thead class='thead-dark'>
+                                         <tr>
+                                             <th>&nbsp;</th>
+                                             <th>Name</th>
+                                             <th>Sector</th>
+                                             <th>State</th>
+                                             
+                                         </tr>
+                                     </thead>
+                                     <tbody id="tbody1">
+                                        
+                                        {% for board in all_boards %}
+                                         <tr>
+                                             <th>{{forloop.counter}}</th>
+                                             <td>{{board.name}}</td>
+                                             <td>{{board.sector}}</td>
+                                             <td>{{board.state}}</td>
+                                         </tr>
+                                        {% endfor %}
+
+                                     </tbody>
+                                 </table>
+                             </div>
+                        </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-3">
+            <h3>Add Filter</h3>
+            <form action="{% url 'power:user_dash' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="sector" class="col-12"><h4>Sector</h4></label>
+                    <select name="sector" id="sector" class="form-control" value="555">
+                        <option value="555">all</option>
+                        {% for sector in all_sectors %}
+                            <option value="{{sector.id}}">{{sector.name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="state" class="col-12"><h4>State</h4></label>
+                    <select name="state" id="state" class="form-control" value="all">
+                        <option value="all">all</option>
+                        {% for state in all_states %}
+                            <option value="{{state}}">{{state}}</option>
+                        {% endfor %}
+                        
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="url" class="col-12"><h4>Enter URL</h4></label>
+                    <input type="text" name="url" id="url" class="form-control" placeholder="URL">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-dark" id="applyfilter">Apply Filter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> 
+</div>
+
+
+{% endblock body %}
+
+{% block custom_header %}
+    <!-- <li class="nav-item">
+        <a class="nav-link" href="{% url 'power:add_board' %}">Add</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'power:view_board' %}">View</a>
+    </li> -->
+    <!-- <li class="nav-item">
+        <a class="nav-link" href="{% url 'power:edit_profile' %}">Edit Profile</a>
+    </li> -->
+{% endblock custom_header %}
+
+{% block custom_header_right %}
+<li class="nav-item dropdown user-icon">
+    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" ><i class="fas fa-user"></i></a>
+    <div class="dropdown-menu dropdown-menu-right">
+        <a href="{% url 'power:edit_profile' %}" class="dropdown-item">Edit Profile</a>
+        <a href="#" class="dropdown-item">Settings</a>
+        <div class="dropdown-divider"></div>
+        <a href="#"class="dropdown-item">Logout</a>
+    </div>
+</li>
+<li><i class="fas fa-caret-down pt-3 pl-2"></i></li>
+
+{% endblock custom_header_right %}

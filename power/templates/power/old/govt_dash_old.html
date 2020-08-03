@@ -1,0 +1,130 @@
+{% extends 'power/base.html' %}
+
+{% block title %}dashboard{% endblock title %}
+
+
+
+{% block body %}
+<div class="content-wrapper">
+<div class=container>
+    <div class='row pt-5'>
+        <div class="col-12 col-md-2 sidenav">
+            <h4>Sidebar.</h4>
+                <ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'power:add_board' %}">Add</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'power:view_board' %}">View</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'power:edit_profile' %}">Edit Profile</a>
+                    </li>
+                </ul>
+        </div>
+        <div class="col-12 col-md-7">
+            <div class="row">
+                <form>
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <input type="text" name="keyword" id="keyword" placeholder="Search keyword" >
+                        </div>
+                        <div class='col-md-1 ml-0'>
+                            <button type="submit" class="btn btn-secondary btn-sm">Search</i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row row-content" id="searchresult">
+                <div class='col-12 col-sm-9'>
+                         <h2>Search Results</h2>
+                         <div class='table-responsive'>
+                             <table class='table table-striped'>
+                                 <thead class='thead-dark'>
+                                     <tr>
+                                         <th>&nbsp;</th>
+                                         <th>State</th>
+                                         <th>Department</th>
+                                         <th>URL</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody>
+                                     <tr>
+                                         <th>1</th>
+                                         <td>Assam</td>
+                                         <td>Coal</td>
+                                         <td>URL1</td>
+                                     </tr>
+                                     <tr>
+                                         <th>2</th>
+                                         <td>Goa</td>
+                                         <td>Coal</td>
+                                         <td>URL2</td>
+                                     </tr>
+                                     <tr>
+                                         <th>3</th>
+                                         <td>Goa</td>
+                                         <td>Coal</td>
+                                         <td>url3</td>
+                                     </tr>
+                                 </tbody>
+                             </table>
+                         </div>
+                    </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <h3>Add Filter</h3>
+            <form>
+                <div class="form-group">
+                    <label for="state" class="col-12"><h4>State</h4></label>
+                    <select name="state" id="state" class="form-control">
+                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chattisgarh">Chattisgarh</option>
+                        <option value="Goa">Goa</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sector" class="col-12"><h4>Sector</h4></label>
+                    <select name="sector" id="sector" class="form-control">
+                        <option value="Coal">Coal</option>
+                        <option value="Electricity">Electricity</option>
+                        <option value="Petroleum">Petroleum</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="url" class="col-12"><h4>Enter URL</h4></label>
+                    <input type="text" name="url" id="url" class="form-control" placeholder="URL">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-dark" id="applyfilter">Apply Filter</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock body %}
+
+{% block custom_header %}
+
+{% endblock custom_header %}
+
+{% block custom_header_right %}
+<li class="nav-item dropdown user-icon">
+    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user"></i></a>
+    <div class="dropdown-menu dropdown-menu-right">
+        <a href="{% url 'power:edit_profile' %}" class="dropdown-item">Edit Profile</a>
+        <a href="#" class="dropdown-item">Settings</a>
+        <div class="dropdown-divider"></div>
+        <a href="#"class="dropdown-item">Logout</a>
+    </div>
+</li>
+<li><i class="fas fa-caret-down pt-3 pl-2"></i></li>
+{% endblock custom_header_right %}

@@ -1,0 +1,69 @@
+{% extends 'power/base.html' %}
+
+{% block title %}dashboard{% endblock title %}
+
+
+
+{% block body %}
+<div class="content-wrapper">
+<div class="container pt-5">
+    <div class='row'>
+        <div class="col-md-2 sidenav">
+            <h4>Sidebar.</h4>
+            <ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'power:add_board' %}">Add</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'power:view_board' %}">View</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'power:edit_profile' %}">Edit Profile</a>
+                </li>
+            </ul>
+        </div>
+        <div class='col-lg-4 offset-2'>
+            <h3>View History</h3>
+            <div class="table-responsive">
+                <table class='table table-striped'>
+                    <thead class='thead-dark'>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>State</th>
+                            <th>Department</th>
+                            <th>URL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>1</th>
+                            <td>Assam</td>
+                            <td>Coal</td>
+                            <td>URL1</td>
+                        </tr>
+                        <tr>
+                            <th>2</th>
+                            <td>Goa</td>
+                            <td>Coal</td>
+                            <td>URL2</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <button type='button' id='clearhistory' class='btn btn-outline-secondary'>Clear History</button>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock body %}
+
+{% block custom_header %}    
+
+{% endblock custom_header %}
+
+{% block custom_header_right %}
+    <li class="nav-item">
+        <a class="nav-link" href="#">Logout</a>
+    </li>
+{% endblock custom_header_right %}

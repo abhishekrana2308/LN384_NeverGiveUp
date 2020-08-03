@@ -5,8 +5,10 @@
 
 
 {% block body %}
+
 <script>
 function search(val){
+    
     $.ajax({
         method : "POST",
         url:"{% url 'power:search' %}",
@@ -30,7 +32,7 @@ function search(val){
                         "    <td>"+result[i]['sector']+"</td>\n"+
                         "    <td>"+result[i]['state']+"</td>\n"+
                         "    <td>"+"28 July, 2012"+"</td>\n"+
-                        '    <td><a target="__blank" class="my-btn2" href="/power/get_data/'+result[i].id+'/">See Details</a></td>\n'+
+                        '    <td><a target="__blank" class="my-btn2" href="{% url 'power:analysis' %}">See Details</a></td>\n'+
                         "</tr>\n";
                 text +=row;
             }
@@ -41,8 +43,6 @@ function search(val){
     });
 }
 </script>
-
-
 
 
 {% if message %}
@@ -63,24 +63,53 @@ function search(val){
         <div class="col-md-9">
             <div class="container-fluid">
                 <div class="row">
-									<form class="col-md-6 offset-md-5 col-12" action="{% url 'power:save_table' %}" method="post" >
-										{% csrf_token %}
-										<div class="form-group">
-											<label for="exampleInputEmail1">Name of Table</label>
-											<input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Set a Table Name">
-										</div>
-										<div class="form-group">
-											<label for="exampleInputEmail1">URL</label>
-											<input name="url" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="URL of the Page">
-										</div>
-										<div class="form-group">
-											<label for="exampleInputEmail1">Xpath</label>
-											<input name="xpath" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Click on Xpath Helper">
-										</div>
-										<button type="submit" class="btn btn-primary">Submit</button>
-									</form>
+                    <form class="col-12">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" name="keyword" id="keyword" placeholder="Search keyword" onkeyup="search(this.value)">
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" data-toggle="modal" data-target="#filtermodal" class="btn btn-dark" id="applyfilter">Apply Filter</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row row-content" id="searchresult">
+                    <div class='col-12 col-sm-12'>
+                             <div class='table-responsive'>
+                                 <table class='table table-striped'>
+                                     <thead class='thead-dark'>
+                                         <tr>
+                                             <th>&nbsp;</th>
+                                             <th>Name of the Board</th>
+                                             <th>Sector</th>
+                                             <th>State</th>
+                                             <th>Last Modified</th>
+                                             <th>Details</th>
+                                         </tr>
+                                     </thead>
+                                     <tbody id="tbody1">
+                                        
+                                        {% for board in all_boards %}
+                                         <tr>
+                                             <th>{{forloop.counter}}</th>
+                                             <td>{{board.name}}</td>
+                                             <td>{{board.sector}}</td>
+                                             <td>{{board.state}}</td>
+                                             <td>28 July, 2012</td>
+                                             <td><a target="__blank" class="my-btn2" href="{% url 'power:analysis' %}">See Details</a></td>
+                                         </tr>
+                                        {% endfor %}
+
+                                     </tbody>
+
+                                     
+                                 </table>
+                             </div>
+                        </div>
                 </div>
             </div>
+
         </div>
     </div>
 </div> 
@@ -89,26 +118,17 @@ function search(val){
 
 {% endblock body %}
 
-{% block custom_header %}
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="{% url 'power:add_board' %}">Add</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{% url 'power:view_board' %}">View</a>
-    </li> -->
-    <!-- <li class="nav-item">
-        <a class="nav-link" href="{% url 'power:edit_profile' %}">Edit Profile</a>
-    </li> -->
-{% endblock custom_header %}
 
 {% block custom_header_right %}
 <li class="nav-item">
-    <a class="nav-link" href="{% url 'power:user_dash' %}">{{request.session.name}}<span class="sr-only">(current)</span></a>
+    <a class="nav-link" href="{% url 'power:govt_dash' %}">{{request.session.name}} <span class="sr-only">(current)</span></a>
 </li>
 <li class="nav-item dropdown user-icon">
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" ><i class="fas fa-user"></i></a>
     <div class="dropdown-menu dropdown-menu-right">
         <a href="{% url 'power:edit_profile' %}" class="dropdown-item">Edit Profile</a>
+        <a href="#" data-toggle="modal" data-target="#adddatamodal" class="dropdown-item">Add Data</a>
+        <a href="{% url 'power:govt_dash' %}" class="dropdown-item">View History</a>
         <div class="dropdown-divider"></div>
         <a href="{% url 'power:logout' %}"class="dropdown-item">Logout</a>
     </div>
@@ -117,8 +137,9 @@ function search(val){
 
 {% endblock custom_header_right %}
 
-{% block apply_filter %}
 
+
+{% block apply_filter %}
 <!-- Apply Filter Modal -->
 <div class="modal fade" id="filtermodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -130,39 +151,26 @@ function search(val){
         </button>
       </div>
       <div class="modal-body">
-        <form action="{% url 'power:user_dash' %}" method="POST">
+        <form action="{% url 'power:govt_dash' %}" method="POST">
             {% csrf_token %}
             <div class="form-group">
                 <label style="padding: 0px;" for="state" class="col-12"><h4>State</h4></label>
                 <select name="state" id="state" class="form-control" value="all">
-                    <option id="all_st" value="all">All States</option>
+                    <option value="all">All States</option>
                     {% for state in all_states %}
-                        <option id="{{state}}" value="{{state}}">{{state}}</option>
+                        <option value="{{state}}">{{state}}</option>
                     {% endfor %}
                     
                 </select>
-                <!-- <select name="state" id="state" class="form-control">
-                    <option value="Andhra Pradesh">Andhra Pradesh</option>
-                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
-                    <option value="Assam">Assam</option>
-                    <option value="Bihar">Bihar</option>
-                    <option value="Chattisgarh">Chattisgarh</option>
-                    <option value="Goa">Goa</option>
-                </select> -->
             </div>
             <div class="form-group">
                 <label style="padding: 0px;" for="sector" class="col-12"><h4>Sector</h4></label>
                 <select name="sector" id="sector" class="form-control" value="555">
-                    <option id="555" value="555">All Sectors</option>
+                    <option value="555">All Sector</option>
                     {% for sector in all_sectors %}
-                        <option id="{{sector.id}}" value="{{sector.id}}">{{sector.name}}</option>
+                        <option value="{{sector.id}}">{{sector.name}}</option>
                     {% endfor %}
                 </select>
-                <!-- <select name="sector" id="sector" class="form-control">
-                    <option value="Coal">Coal</option>
-                    <option value="Electricity">Electricity</option>
-                    <option value="Petroleum">Petroleum</option>
-                </select> -->
             </div>
             <button type="submit" class="btn btn-primary my-btn"><i class="fas fa-chevron-right"></i></button>
         </form>
@@ -175,6 +183,9 @@ function search(val){
   </div>
 </div>
 
+<script type="text/javascript">
+  $("#alert").fadeOut(3000);
+</script>
 <script type="text/javascript">
   $("#alert").fadeOut(3000);
   var state="";

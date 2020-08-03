@@ -41,6 +41,7 @@ function search(val){
     });
 }
 </script>
+<style type="text/css" link="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></style>
 
 
 
@@ -56,29 +57,52 @@ function search(val){
 </div>
 {% endif %}
 {% endif %}
-
+<style type="text/css">
+    .fa-bell{
+        font-size: 120px;
+    }
+    a{
+        color: rgb(50,50,50);
+    }
+    a:hover{
+        color: rgb(50,50,50);
+    }
+    p{
+        margin: 2px;
+    }
+</style>
 <div class="content-wrapper">
 <div class="container-fluid">
     <div class="row pt-5">
-        <div class="col-md-9">
+        <div class="col-md-12">
             <div class="container-fluid">
+                
                 <div class="row">
-									<form class="col-md-6 offset-md-5 col-12" action="{% url 'power:save_table' %}" method="post" >
-										{% csrf_token %}
-										<div class="form-group">
-											<label for="exampleInputEmail1">Name of Table</label>
-											<input name="name" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Set a Table Name">
-										</div>
-										<div class="form-group">
-											<label for="exampleInputEmail1">URL</label>
-											<input name="url" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="URL of the Page">
-										</div>
-										<div class="form-group">
-											<label for="exampleInputEmail1">Xpath</label>
-											<input name="xpath" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Click on Xpath Helper">
-										</div>
-										<button type="submit" class="btn btn-primary">Submit</button>
-									</form>
+
+                    <div class="col-md-4 offset-md-4 p-3 text-center">
+    					<div class="card text-center p-2" style="height: 340px;">
+                         <i class="far fa-bell"></i>
+                          <div style="padding: 0px;" class="card-body">
+                            <h6 class="card-title mt-3">{{alert.name}}</h6>
+                            {% if alert.attr %}
+                            <p><b>Type : </b>Power Drawl</p>
+                            <p><b>Monitoring : </b>{{alert.key}}</p>
+                            <p><b>Average Value : </b>{{alert.avgvalue}}</p>
+                            <p><b>{{alert.minmattr}} : </b>{{alert.minmvalue}}</p>
+                            <p><b>Start Time : </b>{{alert.starttime}}</p>
+                            <p><b>End Time : </b>{{alert.endtime}}</p>
+                            {% else %}
+                            <p><b>Type : </b>Frequency</p>
+                            <p><b>Average Value : </b>{{alert.avgvalue}}</p>
+                            <p><b>Minm Value : </b>{{alert.minmvalue}}</p>
+                            <p><b>Maxm Value : </b>{{alert.maxmvalue}}</p>
+                            <p><b>Start Time : </b>{{alert.starttime}}</p>
+                            <p><b>End Time : </b>{{alert.endtime}}</p>
+                            {% endif %}
+                          </div>
+                        </div>
+                        <a class="btn btn-lg about-us-btn mt-3" href="/power/user_dash" role="button">MAIL ME</a><a class="btn btn-lg about-us-btn mt-3 ml-3" href="/power/alert" role="button">GO BACK</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -174,7 +198,7 @@ function search(val){
     </div>
   </div>
 </div>
-
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
 <script type="text/javascript">
   $("#alert").fadeOut(3000);
   var state="";

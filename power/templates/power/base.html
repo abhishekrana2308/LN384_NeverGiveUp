@@ -26,7 +26,7 @@
       }
       .content-wrapper{
         background-color: white;
-        min-height: 550px;
+        min-height: 380px;
         height: 100%;
         margin: 12px 12px 0 12px;
         border-radius: 15px 15px 0 0;
@@ -139,18 +139,24 @@
             
             <li class="nav-item {% if homelink %} active {% endif %}">
                 <a class="nav-link" href="
-                #">Home <span class="sr-only">(current)</span></a>
-                {% comment %} haha_hello {% endcomment %}
-                {% comment %} {% if request.session.uid %}
+                {% if request.session.uid %}
                     {% if request.session.is_user %} {% url 'power:user_dash' %}
                     {% else %} {% url 'power:govt_dash' %}
                     {% endif %}
                 {% else %} {% url 'power:index' %}
-                {% endif %} {% endcomment %}
+                {% endif %}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            {% if request.session.uid %}
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'power:history' %}">History <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{% url 'power:index' %}">Services <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="{% url 'power:alert' %}">Alerts <span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'power:history' %}">Saved Charts <span class="sr-only">(current)</span></a>
+            </li>
+            {% endif %}
             <li class="nav-item">
                 <a class="nav-link" data-toggle="modal" data-target="#contactmodal" href="#" >Contact<span class="sr-only">(current)</span></a>
             </li>
@@ -170,7 +176,7 @@
             </form> -->
             <ul class="nav navbar-nav ml-auto">
             {% block custom_header_right %}
-                {% comment %} {% if request.session.uid %}
+                {% if request.session.uid %}
                   {% if request.session.is_user %}
                   <li class="nav-item">
                       <a class="nav-link" href="{% url 'power:user_dash' %}">{{request.session.name}} <span class="sr-only">(current)</span></a>
@@ -180,27 +186,26 @@
                       <a class="nav-link" href="{% url 'power:govt_dash' %}">{{request.session.name}} <span class="sr-only">(current)</span></a>
                   </li>
                   {% endif %}
-                {% endif %} {% endcomment %}
-                <li class="nav-item">
-                      <a class="nav-link" href="{% url 'power:user_dash' %}">{{request.session.name}} <span class="sr-only">(current)</span></a>
-                  </li>
+                {% endif %}
                 <li class="nav-item user-icon dropdown">
                     <a class="nav-link dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user"></i></a>
                     <div class="dropdown-menu my-menu" aria-labelledby="dropdownMenuButton">
                     
-                    {% comment %} {% if request.session.uid %}
+                    {% if request.session.uid %}
                     <a href="{% url 'power:edit_profile' %}" class="dropdown-item">Edit Profile</a>
                     <div class="dropdown-divider"></div>
                     <a href="{% url 'power:logout' %}"class="dropdown-item">Logout</a>
                     {% else %}
                     <a class="dropdown-item" data-toggle="modal" data-target="#loginmodal" href="#">User</a>
                     <a class="dropdown-item" data-toggle="modal" data-target="#adminloginmodal" href="#">Admin</a>
-                    {% endif %} {% endcomment %}
+                    {% endif %}
 
                   </div>
                 </li>
                 <li><i class="fas fa-caret-down pt-3 pl-2"></i></li>
-        
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="{% url 'power:govt_login' %}">Govt Login</a>
+                </li> -->
 
                    
             {% endblock custom_header_right %}
@@ -210,6 +215,18 @@
     
     {% block body %}
     {% endblock body %}
+    <div style="margin-left:12px;margin-right: 12px;margin-top: 0px !important;margin-bottom: 0;" class="card text-center">
+      <div class="card-header">
+        Potential
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">We believe in Team Work</h5>
+        <p class="card-text">This Webiste is developed under the guidance of Ministry of Power</p>
+      </div>
+      <div class="card-footer text-muted">
+        Copyright@2020
+      </div>
+    </div>
 </body>
 </html>
 <!-- Contact us Modal -->
@@ -250,7 +267,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="#" method="post">
+        <form action="{% url 'power:user_login' %}" method="post">
           {% csrf_token %}
           <div class="form-group">
               <label for="email">Email address</label>
@@ -282,7 +299,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="#" method="post">
+        <form action="{% url 'power:user_signup' %}" method="post">
           {% csrf_token %}
           <div class="form-group">
               <label for="name">Full Name</label>
@@ -322,7 +339,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="#" method="post">
+        <form action="{% url 'power:govt_login' %}" method="post">
           {% csrf_token %}
           <div class="form-group">
               <label for="email">Email address</label>
@@ -354,7 +371,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="#" method="post">
+        <form action="{% url 'power:govt_signup' %}" method="post">
           {% csrf_token %}
           <div class="form-group">
               <label for="name">Full Name</label>
@@ -396,7 +413,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form action="#" method="post">
+        <form action="{% url 'power:change_password' %}" method="post">
           {% csrf_token %}
           <div class='form-group'>
             <div id='changepass'>
@@ -441,7 +458,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form class="p-2"  action="#" method="post">
+        <form class="p-2"  action="{% url 'power:add_board' %}" method="post">
               {% csrf_token %}
               <div class="form-group">
                 <div class="row">
@@ -510,7 +527,7 @@
   </div>
 </div>
 
-{% comment %} 
+
 
 <SCRIPT language="javascript">
 function add() {
@@ -531,4 +548,4 @@ function add() {
     foo.appendChild(element);
 
 }
-</SCRIPT> {% endcomment %}
+</SCRIPT>
