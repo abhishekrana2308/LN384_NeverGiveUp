@@ -1,4 +1,6 @@
 # power-sih-2020
+A web App to automatically fetch real time data from various power stakeholders, displays them on the dashboard and provides you with other cool features of automatically triggering and e-mailing.
+
 ## command line instructions for linux(ubuntu/mint) only, window users follow the steps and find the commands on your own.
 #### install python3
 #### install pip3 or install python3-pip
